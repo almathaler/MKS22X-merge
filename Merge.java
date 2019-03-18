@@ -109,44 +109,58 @@ public class Merge{
   }
   private static void mergesortOH(int[]data, int[]temp, int lo, int hi){
     if (lo < hi){
-      System.out.println("Entered a new mOH call w lo: " + lo + " and hi: " + hi);
+      //System.out.println("Entered a new mOH call w lo: " + lo + " and hi: " + hi);
       int pivot;
       if ((hi-lo) % 2 == 0){
         pivot = ((hi+lo) / 2); // so in array of size 4, pivot will be index 2
       }else{
         pivot = ((hi+lo) / 2) + 1; // in array of size 5, pivot witll be index 3 (right will be shorter than left by 1)
       }
-      System.out.println("The pivot: " + pivot);
-      System.out.println("Will mergesort sections " + lo + " to " + (pivot-1) + " and " + pivot +  " to " + hi);
+      //System.out.println("The pivot: " + pivot);
+      //System.out.println("Will mergesort sections " + lo + " to " + (pivot-1) + " and " + pivot +  " to " + hi);
       //
       mergesortOH(temp, data, lo, pivot-1);
       mergesortOH(temp, data, pivot, hi); //right side will be +1 bigger than left is array is odd
       //
+      System.out.println("\nMerging the 2 sorted blocks of the temp array: " + lo + ", " + (pivot-1) + " & " + pivot + ", " + hi);
+      System.out.println("Temp array parts to be copied into data: " + Arrays.toString(temp));
+      System.out.println("Data before copying: " + Arrays.toString(data));
       int c = lo; //fill later, keep below hi of this call
       int i = lo; //from i - k and k - hi have been sorted
       int k = pivot; //read up on both sections simultaneously
-      while (c<hi){
+      while (c<=hi){
         // do same check as normal mergesort however the catch is like this:
         // if i=pivot, fill rest of data up until hi w k values
         // if k = hi, fill rest of data up with i values until pivot
-        if (k == hi){ //should always be writing into what is considered data
+        if (k > hi){ //should always be writing into what is considered data
+          System.out.println("k  is > hi: " + k + ", hi: " + hi);
           data[c] = temp[i];
           i++;
           c++;
-        }else if (i == pivot){
+          System.out.println("Written on data: " + Arrays.toString(data));
+        }else if (i > pivot){
+          System.out.println("i  is > pivot: " + i + ", pivot: " + pivot);
           data[c] = temp[k];
           k++;
           c++;
+          System.out.println("Written on data: " + Arrays.toString(data));
         }else if (temp[k] < temp[i]){
+          System.out.println("Indecies of k and i: " + k + ", " + i);
+          System.out.println("temp[k] < temp[i]: " + temp[k] + ", " + temp[i]);
           data[c] = temp[k];
           k++;
           c++;
+          System.out.println("Written on data: " + Arrays.toString(data));
         }else {
+          System.out.println("Indecies of k and i: " + k + ", " + i);
+          System.out.println("temp[i] <= temp[k]: " + temp[i] + ", " + temp[k]);
           data[c] = temp[i];
           i++;
           c++;
+          System.out.println("Written on data: " + Arrays.toString(data));
         }
       }
+      System.out.println("Written on data: " + Arrays.toString(data));
     }
   }
   //end
