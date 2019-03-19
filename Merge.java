@@ -2,7 +2,7 @@ import java.util.Arrays;
 public class Merge{
   public static void main(String[]args){
     int[] data = {3, 4, 2, 5, 1, 8 , 6, 5, 9, 10};
-    mergesortOpt(data);
+    insertionSub(data, 0, data.length - 1);
     System.out.println(Arrays.toString(data));
     /*
     System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
@@ -208,5 +208,37 @@ public class Merge{
         System.out.println("Written on data: " + Arrays.toString(data));
       }
     }
+  }
+  public static void insertionSub(int[] data, int lo, int hi){
+    for (int ind = lo+1; ind <= hi; ind++){
+      System.out.println("At " + ind +" : " + data[ind]);
+      if (data[ind] > data[ind-1]){
+        //don't do anything, it's in the right place
+        System.out.println("data is larger than one before");
+      }else{
+        for (int indBefore = ind-1; indBefore >= 0; indBefore--){
+          if (data[ind] > data[indBefore]){ //insert
+            insert(data, ind, indBefore+1);
+            indBefore = -1;
+          }else if (indBefore == 0){ //means that it is the smallest element and needs to be at the front
+            insert(data, ind, 0);
+            indBefore = -1; //to stop it from keepnig on gong
+          }
+        }
+      }
+      //only do this if ind is less than one before
+      System.out.println("Data after moving that element: " + Arrays.toString(data));
+    }
+  }
+  //put ind1 at ind2, move everything between ind1 and ind2 up one
+  //ind1 is the greater value
+  private static void insert(int[] data, int ind1, int ind2){
+    System.out.println("inserting: " + data[ind1] + "(index " + ind1 + " )" + "at index " + ind2);
+    int temp = data[ind1];
+    for (int i = ind1; i>ind2; i--){
+      System.out.println(Arrays.toString(data));
+      data[i] = data[i-1];
+    }
+    data[ind2] = temp;
   }
 }
