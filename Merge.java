@@ -1,8 +1,9 @@
 import java.util.Arrays;
 public class Merge{
   public static void main(String[]args){
-    int[] data = {3, 4, 2, 5, 1, 8 , 6, 5, 9, 10};
-    insertionSub(data, 0, data.length - 1);
+    int[] data = {2, 3, 4, 1, 5, 23, 2, 1, 9, 8, 3, 4, 2, 1,65, 45, 3};
+    insertionSub(data, 0, 7);
+    insertionSub(data, 8, data.length - 1);
     System.out.println(Arrays.toString(data));
     /*
     System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
@@ -216,12 +217,12 @@ public class Merge{
         //don't do anything, it's in the right place
         System.out.println("data is larger than one before");
       }else{
-        for (int indBefore = ind-1; indBefore >= 0; indBefore--){
+        for (int indBefore = ind-1; indBefore >= lo; indBefore--){
           if (data[ind] > data[indBefore]){ //insert
             insert(data, ind, indBefore+1);
             indBefore = -1;
-          }else if (indBefore == 0){ //means that it is the smallest element and needs to be at the front
-            insert(data, ind, 0);
+          }else if (indBefore == lo){ //means that it is the smallest element and needs to be at the front
+            insert(data, ind, lo);
             indBefore = -1; //to stop it from keepnig on gong
           }
         }
