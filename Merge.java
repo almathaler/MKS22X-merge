@@ -1,11 +1,6 @@
 import java.util.Arrays;
 public class Merge{
   public static void main(String[]args){
-    int[] data = {2, 3, 4, 1, 5, 23, 2, 1, 9, 8, 3, 4, 2, 1,65, 45, 3};
-    insertionSub(data, 0, 7);
-    insertionSub(data, 8, data.length - 1);
-    System.out.println(Arrays.toString(data));
-    /*
     System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
     int[]MAX_LIST = {1000000000,500,10};
     for(int MAX : MAX_LIST){
@@ -38,7 +33,6 @@ public class Merge{
       }
       System.out.println();
     }
-    */
   }
   /*sort the array from least to greatest value. This is a wrapper function*/
   public static void mergesort(int[]data){
