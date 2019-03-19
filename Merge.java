@@ -100,9 +100,9 @@ public class Merge{
   //optimized mergesort
   public static void mergesortOpt(int[] data){
     int[] temp = Arrays.copyOf(data, data.length);
-    mergesortOH(data, temp, 0, data.length - 1);
+    mergesortOptHelp(data, temp, 0, data.length - 1);
   }
-  private static void mergesortOH(int[]data, int[]temp, int lo, int hi){
+  private static void mergesortOptHelp(int[]data, int[]temp, int lo, int hi){
     if (hi - lo <= 47){
       insertionSub(data, lo, hi); //the ordering might seem weird. you're sorting data parameter cuz even if later in the code/tree
                                   //you're merging temp into data (if you mergesorted the data, u fill temp then merge),
@@ -115,8 +115,8 @@ public class Merge{
       }else{
         pivot = ((hi+lo) / 2) + 1; // in array of size 5, pivot witll be index 3 (right will be shorter than left by 1)
       }
-      mergesortOH(temp, data, lo, pivot-1);
-      mergesortOH(temp, data, pivot, hi); //right side will be +1 bigger than left is array is odd
+      mergesortOptHelp(temp, data, lo, pivot-1);
+      mergesortOptHelp(temp, data, pivot, hi); //right side will be +1 bigger than left is array is odd
       //
       //System.out.println("\nMerging the 2 sorted blocks of the temp array: " + lo + ", " + (pivot-1) + " & " + pivot + ", " + hi);
       //System.out.println("Temp array parts to be copied into data: " + Arrays.toString(temp));
@@ -127,6 +127,7 @@ public class Merge{
   //end
   //c should be the lower value
   //hi is determined as
+  //this just integrates the arrays
   public static void mergeOpt(int[] data, int[] temp, int lo, int pivot, int hi){
     int c = lo; //fill later, keep below hi of this call
     int i = lo; //from i - k and k - hi have been sorted
@@ -169,23 +170,16 @@ public class Merge{
   }
   public static void insertionSub(int[] data, int lo, int hi){
     for (int ind = lo+1; ind <= hi; ind++){
-      //System.out.println("At " + ind +" : " + data[ind]);
-      if (data[ind] > data[ind-1]){
-        //don't do anything, it's in the right place
-        //System.out.println("data is larger than one before");
+      int current = data[ind];
+      int j = ind-1;
+      if (current > data[j]){
+        //don't do anything, current is in the right place
       }else{
-        for (int indBefore = ind-1; indBefore >= lo; indBefore--){
-          if (data[ind] > data[indBefore]){ //insert
-            insert(data, ind, indBefore+1);
-            indBefore = -1;
-          }else if (indBefore == lo){ //means that it is the smallest element and needs to be at the front
-            insert(data, ind, lo);
-            indBefore = -1; //to stop it from keepnig on gong
-          }
+        while (j >= lo && data[j] > current){
+          j--; //will return the first index of an element less than current. so insert infront of that element
         }
+        insert(data, ind, j+1); //so if j is -1, bc it's less than everything, move it to 0
       }
-      //only do this if ind is less than one before
-      //System.out.println("Data after moving that element: " + Arrays.toString(data));
     }
   }
   //put ind1 at ind2, move everything between ind1 and ind2 up one
