@@ -3,7 +3,7 @@ public class Merge{
   public static void main(String[]args){
     int[] data = {3, 4, 2, 5, 1, 8 , 6, 5, 9, 10};
     mergesortOpt(data);
-    System.out.println("Old data: {3, 4, 2, 5, 1, 8 , 6, 5, 9, 10}" + "\t new data: " + Arrays.toString(data));
+    System.out.println(Arrays.toString(data));
     /*
     System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
     int[]MAX_LIST = {1000000000,500,10};
@@ -125,6 +125,8 @@ public class Merge{
       System.out.println("\nMerging the 2 sorted blocks of the temp array: " + lo + ", " + (pivot-1) + " & " + pivot + ", " + hi);
       System.out.println("Temp array parts to be copied into data: " + Arrays.toString(temp));
       System.out.println("Data before copying: " + Arrays.toString(data));
+      mergeOpt(data, temp, lo, pivot, hi);
+      /*
       int c = lo; //fill later, keep below hi of this call
       int i = lo; //from i - k and k - hi have been sorted
       int k = pivot; //read up on both sections simultaneously
@@ -160,8 +162,51 @@ public class Merge{
           System.out.println("Written on data: " + Arrays.toString(data));
         }
       }
+      */
       System.out.println("Written on data: " + Arrays.toString(data));
     }
   }
   //end
+  //c should be the lower value
+  //hi is determined as
+  public static void mergeOpt(int[] data, int[] temp, int lo, int pivot, int hi){
+    int c = lo; //fill later, keep below hi of this call
+    int i = lo; //from i - k and k - hi have been sorted
+    int k = pivot; //read up on both sections simultaneously
+    System.out.println("The temp array: " + Arrays.toString(temp));
+    System.out.println("The data that will be written on: " + Arrays.toString(data));
+    System.out.println("lo, pivot, hi: " + lo +", "+pivot+", " + hi);
+    while (c<=hi){
+      // do same check as normal mergesort however the catch is like this:
+      // if i=pivot, fill rest of data up until hi w k values
+      // if k = hi, fill rest of data up with i values until pivot
+      if (k > hi){ //should always be writing into what is considered data
+        System.out.println("k  is > hi: " + k + ", hi: " + hi);
+        data[c] = temp[i];
+        i++;
+        c++;
+        System.out.println("Written on data: " + Arrays.toString(data));
+      }else if (i >= pivot){
+        System.out.println("i  is > pivot: " + i + ", pivot: " + pivot);
+        data[c] = temp[k];
+        k++;
+        c++;
+        System.out.println("Written on data: " + Arrays.toString(data));
+      }else if (temp[k] < temp[i]){
+        System.out.println("Indecies of k and i: " + k + ", " + i);
+        System.out.println("temp[k] < temp[i]: " + temp[k] + ", " + temp[i]);
+        data[c] = temp[k];
+        k++;
+        c++;
+        System.out.println("Written on data: " + Arrays.toString(data));
+      }else {
+        System.out.println("Indecies of k and i: " + k + ", " + i);
+        System.out.println("temp[i] <= temp[k]: " + temp[i] + ", " + temp[k]);
+        data[c] = temp[i];
+        i++;
+        c++;
+        System.out.println("Written on data: " + Arrays.toString(data));
+      }
+    }
+  }
 }
