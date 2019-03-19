@@ -109,62 +109,25 @@ public class Merge{
     mergesortOH(data, temp, 0, data.length - 1);
   }
   private static void mergesortOH(int[]data, int[]temp, int lo, int hi){
-    if (lo < hi){
-      //System.out.println("Entered a new mOH call w lo: " + lo + " and hi: " + hi);
+    if (hi - lo <= 47){
+      insertionSub(data, lo, hi); //the ordering might seem weird. you're sorting data parameter cuz even if later in the code/tree
+                                  //you're merging temp into data (if you mergesorted the data, u fill temp then merge),
+                                  //when the data from this mergesortOH call is returned it's treated as the temp. relative to itself
+                                  //it's data but relative to what called the method, it's temp
+    }else if (lo < hi){
       int pivot;
       if ((hi-lo) % 2 == 0){
         pivot = ((hi+lo) / 2); // so in array of size 4, pivot will be index 2
       }else{
         pivot = ((hi+lo) / 2) + 1; // in array of size 5, pivot witll be index 3 (right will be shorter than left by 1)
       }
-      //System.out.println("The pivot: " + pivot);
-      //System.out.println("Will mergesort sections " + lo + " to " + (pivot-1) + " and " + pivot +  " to " + hi);
-      //
       mergesortOH(temp, data, lo, pivot-1);
       mergesortOH(temp, data, pivot, hi); //right side will be +1 bigger than left is array is odd
       //
-      System.out.println("\nMerging the 2 sorted blocks of the temp array: " + lo + ", " + (pivot-1) + " & " + pivot + ", " + hi);
-      System.out.println("Temp array parts to be copied into data: " + Arrays.toString(temp));
-      System.out.println("Data before copying: " + Arrays.toString(data));
+      //System.out.println("\nMerging the 2 sorted blocks of the temp array: " + lo + ", " + (pivot-1) + " & " + pivot + ", " + hi);
+      //System.out.println("Temp array parts to be copied into data: " + Arrays.toString(temp));
+      //System.out.println("Data before copying: " + Arrays.toString(data));
       mergeOpt(data, temp, lo, pivot, hi);
-      /*
-      int c = lo; //fill later, keep below hi of this call
-      int i = lo; //from i - k and k - hi have been sorted
-      int k = pivot; //read up on both sections simultaneously
-      while (c<=hi){
-        // do same check as normal mergesort however the catch is like this:
-        // if i=pivot, fill rest of data up until hi w k values
-        // if k = hi, fill rest of data up with i values until pivot
-        if (k > hi){ //should always be writing into what is considered data
-          System.out.println("k  is > hi: " + k + ", hi: " + hi);
-          data[c] = temp[i];
-          i++;
-          c++;
-          System.out.println("Written on data: " + Arrays.toString(data));
-        }else if (i > pivot){
-          System.out.println("i  is > pivot: " + i + ", pivot: " + pivot);
-          data[c] = temp[k];
-          k++;
-          c++;
-          System.out.println("Written on data: " + Arrays.toString(data));
-        }else if (temp[k] < temp[i]){
-          System.out.println("Indecies of k and i: " + k + ", " + i);
-          System.out.println("temp[k] < temp[i]: " + temp[k] + ", " + temp[i]);
-          data[c] = temp[k];
-          k++;
-          c++;
-          System.out.println("Written on data: " + Arrays.toString(data));
-        }else {
-          System.out.println("Indecies of k and i: " + k + ", " + i);
-          System.out.println("temp[i] <= temp[k]: " + temp[i] + ", " + temp[k]);
-          data[c] = temp[i];
-          i++;
-          c++;
-          System.out.println("Written on data: " + Arrays.toString(data));
-        }
-      }
-      */
-      System.out.println("Written on data: " + Arrays.toString(data));
     }
   }
   //end
@@ -174,48 +137,48 @@ public class Merge{
     int c = lo; //fill later, keep below hi of this call
     int i = lo; //from i - k and k - hi have been sorted
     int k = pivot; //read up on both sections simultaneously
-    System.out.println("The temp array: " + Arrays.toString(temp));
-    System.out.println("The data that will be written on: " + Arrays.toString(data));
-    System.out.println("lo, pivot, hi: " + lo +", "+pivot+", " + hi);
+    //System.out.println("The temp array: " + Arrays.toString(temp));
+    //System.out.println("The data that will be written on: " + Arrays.toString(data));
+    //System.out.println("lo, pivot, hi: " + lo +", "+pivot+", " + hi);
     while (c<=hi){
       // do same check as normal mergesort however the catch is like this:
       // if i=pivot, fill rest of data up until hi w k values
       // if k = hi, fill rest of data up with i values until pivot
       if (k > hi){ //should always be writing into what is considered data
-        System.out.println("k  is > hi: " + k + ", hi: " + hi);
+        //System.out.println("k  is > hi: " + k + ", hi: " + hi);
         data[c] = temp[i];
         i++;
         c++;
-        System.out.println("Written on data: " + Arrays.toString(data));
+        //System.out.println("Written on data: " + Arrays.toString(data));
       }else if (i >= pivot){
-        System.out.println("i  is > pivot: " + i + ", pivot: " + pivot);
+        //System.out.println("i  is > pivot: " + i + ", pivot: " + pivot);
         data[c] = temp[k];
         k++;
         c++;
-        System.out.println("Written on data: " + Arrays.toString(data));
+        //System.out.println("Written on data: " + Arrays.toString(data));
       }else if (temp[k] < temp[i]){
-        System.out.println("Indecies of k and i: " + k + ", " + i);
-        System.out.println("temp[k] < temp[i]: " + temp[k] + ", " + temp[i]);
+        //System.out.println("Indecies of k and i: " + k + ", " + i);
+        //System.out.println("temp[k] < temp[i]: " + temp[k] + ", " + temp[i]);
         data[c] = temp[k];
         k++;
         c++;
-        System.out.println("Written on data: " + Arrays.toString(data));
+        //System.out.println("Written on data: " + Arrays.toString(data));
       }else {
-        System.out.println("Indecies of k and i: " + k + ", " + i);
-        System.out.println("temp[i] <= temp[k]: " + temp[i] + ", " + temp[k]);
+        //System.out.println("Indecies of k and i: " + k + ", " + i);
+        //System.out.println("temp[i] <= temp[k]: " + temp[i] + ", " + temp[k]);
         data[c] = temp[i];
         i++;
         c++;
-        System.out.println("Written on data: " + Arrays.toString(data));
+        //System.out.println("Written on data: " + Arrays.toString(data));
       }
     }
   }
   public static void insertionSub(int[] data, int lo, int hi){
     for (int ind = lo+1; ind <= hi; ind++){
-      System.out.println("At " + ind +" : " + data[ind]);
+      //System.out.println("At " + ind +" : " + data[ind]);
       if (data[ind] > data[ind-1]){
         //don't do anything, it's in the right place
-        System.out.println("data is larger than one before");
+        //System.out.println("data is larger than one before");
       }else{
         for (int indBefore = ind-1; indBefore >= lo; indBefore--){
           if (data[ind] > data[indBefore]){ //insert
@@ -228,16 +191,16 @@ public class Merge{
         }
       }
       //only do this if ind is less than one before
-      System.out.println("Data after moving that element: " + Arrays.toString(data));
+      //System.out.println("Data after moving that element: " + Arrays.toString(data));
     }
   }
   //put ind1 at ind2, move everything between ind1 and ind2 up one
   //ind1 is the greater value
   private static void insert(int[] data, int ind1, int ind2){
-    System.out.println("inserting: " + data[ind1] + "(index " + ind1 + " )" + "at index " + ind2);
+    //System.out.println("inserting: " + data[ind1] + "(index " + ind1 + " )" + "at index " + ind2);
     int temp = data[ind1];
     for (int i = ind1; i>ind2; i--){
-      System.out.println(Arrays.toString(data));
+      //System.out.println(Arrays.toString(data));
       data[i] = data[i-1];
     }
     data[ind2] = temp;
