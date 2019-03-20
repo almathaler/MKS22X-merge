@@ -35,6 +35,7 @@ public class Merge{
     }
   }
   /*sort the array from least to greatest value. This is a wrapper function*/
+  /*
   public static void mergesort(int[]data){
     mergesortHelp(data, 0, data.length-1);
   }
@@ -97,8 +98,9 @@ public class Merge{
       }
     }
   }
+  */
   //optimized mergesort
-  public static void mergesortOpt(int[] data){
+  public static void mergesort(int[] data){
     int[] temp = Arrays.copyOf(data, data.length);
     mergesortOptHelp(data, temp, 0, data.length - 1);
   }
