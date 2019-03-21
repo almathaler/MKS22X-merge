@@ -101,8 +101,12 @@ public class Merge{
   */
   //optimized mergesort
   public static void mergesort(int[] data){
-    int[] temp = Arrays.copyOf(data, data.length);
-    mergesortOptHelp(data, temp, 0, data.length - 1);
+    if (data.length == 0){
+      //don't touch it if nothing there
+    }else {
+      int[] temp = Arrays.copyOf(data, data.length);
+      mergesortOptHelp(data, temp, 0, data.length - 1);
+    }
   }
   private static void mergesortOptHelp(int[]data, int[]temp, int lo, int hi){
     if (hi - lo <= 47){
